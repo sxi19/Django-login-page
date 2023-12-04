@@ -20,4 +20,8 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('userlogin/',include('userlogin.urls')),
+    
+    # add a path for social_django_auth
+    path('social-auth/',
+         include('social_django.urls',namespace='social')),
 ]

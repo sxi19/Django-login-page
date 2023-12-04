@@ -10,7 +10,27 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+
+
 from pathlib import Path
+
+#redicect to dashboard after password authentication
+LOGIN_REDIRECT_URL = '/userlogin'
+#redirect to login url when no password authentication
+LOGIN_URL= '/userlogin/login'
+LOGOUT_URL= '/userlogin/logout'
+
+#authentication backends. Put the class name 'EmailAuthBackend' into ''
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'userlogin.authentication.EmailAuthBackend',
+    # add google OAUTH2 link
+    'social_core.backends.google.GoogleOAuth2',
+]
+
+# this two keys is copied from google OAUTH2
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '545206850399-13vh6mn51gatohpguhufopss09pfej1j.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +45,7 @@ SECRET_KEY = 'django-insecure-xn595+_124(gt@qpntln82u72+5^#r0780j$fn^x-z*^q%9-h4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['mysite.com', 'localhost', '127.0.0.1', '::1']
 
 
 # Application definition
@@ -38,6 +58,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'userlogin.apps.UserloginConfig',
+    
+    # add the social_diango_auth name in here tell the system this app is installed, then perform migrate
+    'social_django',
 ]
 
 MIDDLEWARE = [
